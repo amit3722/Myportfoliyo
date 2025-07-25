@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Portfolio | Graphic Design & Video Editing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            200: '#f5d0fe',
+                            300: '#f0abfc',
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                            700: '#a21caf',
+                            800: '#86198f',
+                            900: '#701a75',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #0ea5e9, #d946ef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0ea5e9, #d946ef);
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        
+        .page-transition {
+            transition: opacity 0.5s ease;
+        }
+        
+        .skill-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: #e5e7eb;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #d946ef);
+            transition: width 1s ease-in-out;
+        }
+        
+        .social-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0ea5e9, #d946ef);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c026d3;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a21caf;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #d946ef;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="fixed w-full bg-white bg-opacity-90 dark:bg-gray-900 dark:bg-opacity-90 backdrop-blur-sm z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-display font-bold">
+                <span class="gradient-text">Creative</span><span class="dark:text-white">Portfolio</span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <nav class="flex space-x-6">
+                    <a href="#home" class="nav-link active-nav font-medium">Home</a>
+                    <a href="#about" class="nav-link font-medium">About</a>
+                    <a href="#portfolio" class="nav-link font-medium">Portfolio</a>
+                    <a href="#contact" class="nav-link font-medium">Contact</a>
+                </nav>
+                
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                </button>
+                
+                <button id="admin-toggle" class="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fas fa-lock mr-1"></i> Admin
+                </button>
+            </div>
+            
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-gray-800 shadow-lg transition-all duration-300">
+            <nav class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#home" class="py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Home</a>
+                <a href="#about" class="py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">About</a>
+                <a href="#portfolio" class="py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Portfolio</a>
+                <a href="#contact" class="py-2 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Contact</a>
+                <div class="flex items-center justify-between py-2 px-4">
+                    <button id="mobile-theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                    </button>
+                    <button id="mobile-admin-toggle" class="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-lock mr-1"></i> Admin
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center pt-20 pb-16">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+                            Turning <span class="gradient-text">Ideas</span> into <span class="gradient-text">Visual Reality</span>
+                        </h1>
+                        <p class="text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300">
+                            Graphic Designer & Video Editor crafting compelling visual stories that captivate and inspire.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#portfolio" class="px-8 py-3 rounded-full gradient-bg text-white font-medium hover:opacity-90 transition-opacity">
+                                View My Work
+                            </a>
+                            <a href="#contact" class="px-8 py-3 rounded-full bg-gray-200 dark:bg-gray-700 font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                                Get In Touch
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <div class="relative w-80 h-80 md:w-96 md:h-96">
+                            <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#0ea5e9" />
+                                        <stop offset="100%" stop-color="#d946ef" />
+                                    </linearGradient>
+                                </defs>
+                                <path fill="url(#gradient)" d="M47.7,-57.2C59.9,-45.8,67.2,-29.6,69.2,-13.1C71.2,3.4,68,20.2,59.5,33.1C51,46,37.2,55,21.7,61.5C6.2,68,-11,72,-27.4,68.1C-43.8,64.2,-59.5,52.4,-67.1,36.9C-74.7,21.3,-74.3,2,-68.5,-14.2C-62.7,-30.4,-51.5,-43.5,-38.4,-54.5C-25.3,-65.5,-10.3,-74.4,3.4,-78.3C17.1,-82.2,35.5,-68.6,47.7,-57.2Z" transform="translate(100 100)" />
+                                <g transform="translate(60, 60)">
+                                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M3 16V8C3 5.23858 5.23858 3 8 3H16C18.7614 3 21 5.23858 21 8V16C21 18.7614 18.7614 21 16 21H8C5.23858 21 3 18.7614 3 16Z" stroke="white" stroke-width="1.5"/>
+                                        <path d="M17.5 6.51L17.51 6.49889" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </g>
+                                <g transform="translate(120, 70)">
+                                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15 10L19.5528 7.72361C20.2177 7.39116 21 7.87465 21 8.61803V15.382C21 16.1253 20.2177 16.6088 19.5528 16.2764L15 14M5 18H13C14.1046 18 15 17.1046 15 16V8C15 6.89543 14.1046 6 13 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </g>
+                                <g transform="translate(50, 130)">
+                                    <svg width="70" height="70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 11.5V16.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 7.51L12.01 7.49889" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </g>
+                                <g transform="translate(130, 130)">
+                                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 5H20M20 5V11M20 5L13 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M10 19H4M4 19V13M4 19L11 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                    <div class="w-24 h-1 gradient-bg mx-auto"></div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="md:w-2/5">
+                        <div class="relative">
+                            <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg mx-auto">
+                                <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="200" height="200" fill="#6366f1" />
+                                    <path fill="#a855f7" d="M47.7,-57.2C59.9,-45.8,67.2,-29.6,69.2,-13.1C71.2,3.4,68,20.2,59.5,33.1C51,46,37.2,55,21.7,61.5C6.2,68,-11,72,-27.4,68.1C-43.8,64.2,-59.5,52.4,-67.1,36.9C-74.7,21.3,-74.3,2,-68.5,-14.2C-62.7,-30.4,-51.5,-43.5,-38.4,-54.5C-25.3,-65.5,-10.3,-74.4,3.4,-78.3C17.1,-82.2,35.5,-68.6,47.7,-57.2Z" transform="translate(100 100)" />
+                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="60">JP</text>
+                                </svg>
+                            </div>
+                            <div class="absolute -bottom-4 -right-4 bg-white dark:bg-gray-700 rounded-full p-4 shadow-lg">
+                                <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 21L12 12M12 12L21 3M12 12L3 3M12 12L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 text-center">
+                            <h3 class="text-2xl font-display font-bold mb-2" id="profile-name">Jamie Parker</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4" id="profile-title">Graphic Designer & Video Editor</p>
+                            <div class="flex justify-center space-x-4">
+                                <a href="#" class="social-icon text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="#" class="social-icon text-pink-600 hover:text-pink-800 dark:text-pink-400 dark:hover:text-pink-300">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="#" class="social-icon text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <i class="fab fa-behance text-xl"></i>
+                                </a>
+                                <a href="#" class="social-icon text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-3/5">
+                        <h3 class="text-2xl font-display font-semibold mb-4">Hello there!</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" id="profile-bio">
+                            I'm a passionate graphic designer and video editor with over 5 years of experience creating compelling visual content. My approach combines technical expertise with creative vision to deliver projects that not only meet but exceed client expectations. I believe in the power of visual storytelling to connect, engage, and inspire audiences.
+                        </p>
+                        
+                        <div class="mb-8">
+                            <h4 class="text-xl font-display font-semibold mb-4">Graphic Design Skills</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Adobe Photoshop</span>
+                                        <span>95%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Adobe Illustrator</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Figma</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-display font-semibold mb-4">Video Editing Skills</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Adobe Premiere Pro</span>
+                                        <span>92%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>After Effects</span>
+                                        <span>88%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>DaVinci Resolve</span>
+                                        <span>80%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">My <span class="gradient-text">Portfolio</span></h2>
+                    <div class="w-24 h-1 gradient-bg mx-auto mb-6"></div>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                        Explore my latest projects showcasing my skills in graphic design and video editing.
+                    </p>
+                </div>
+                
+                <!-- Portfolio Filter -->
+                <div class="flex flex-wrap justify-center gap-3 mb-10">
+                    <button class="filter-btn active px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-filter="all">
+                        All
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-filter="logo">
+                        Logo
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-filter="branding">
+                        Branding
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-filter="motion">
+                        Motion Graphics
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-filter="video">
+                        Video
+                    </button>
+                </div>
+                
+                <!-- Portfolio Grid -->
+                <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Portfolio items will be dynamically added here -->
+                </div>
+                
+                <!-- Add Project Button (Admin only) -->
+                <div id="admin-controls" class="mt-12 text-center hidden">
+                    <button id="add-project-btn" class="px-6 py-3 rounded-full gradient-bg text-white font-medium hover:opacity-90 transition-opacity">
+                        <i class="fas fa-plus mr-2"></i> Add New Project
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Get In <span class="gradient-text">Touch</span></h2>
+                    <div class="w-24 h-1 gradient-bg mx-auto mb-6"></div>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                        Have a project in mind? Let's collaborate and create something amazing together.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-12">
+                    <div class="md:w-1/2">
+                        <form id="contact-form" class="space-y-6">
+                            <div>
+                                <label for="name" class="block mb-2 font-medium">Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2 font-medium">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                            </div>
+                            <div>
+                                <label for="message" class="block mb-2 font-medium">Message</label>
+                                <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 rounded-full gradient-bg text-white font-medium hover:opacity-90 transition-opacity">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl p-8 h-full">
+                            <h3 class="text-2xl font-display font-semibold mb-6">Contact Information</h3>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-full gradient-bg flex items-center justify-center mr-4">
+                                        <i class="fas fa-envelope text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium mb-1">Email</h4>
+                                        <p class="text-gray-600 dark:text-gray-300" id="contact-email">ap850910@gmail.com</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-full gradient-bg flex items-center justify-center mr-4">
+                                        <i class="fas fa-phone text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium mb-1">Phone</h4>
+                                        <p class="text-gray-600 dark:text-gray-300" id="contact-phone">+91 7255022706</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-full gradient-bg flex items-center justify-center mr-4">
+                                        <i class="fas fa-map-marker-alt text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium mb-1">Location</h4>
+                                        <p class="text-gray-600 dark:text-gray-300" id="contact-location">San Francisco, CA</p>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-medium mb-3">Follow Me</h4>
+                                    <div class="flex space-x-4">
+                                        <a href="#" class="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center text-white transition-colors">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 rounded-full bg-pink-600 hover:bg-pink-700 flex items-center justify-center text-white transition-colors">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center text-white transition-colors">
+                                            <i class="fab fa-behance"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 rounded-full bg-red-600 hover:bg-red-700 flex items-center justify-center text-white transition-colors">
+                                            <i class="fab fa-youtube"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="#home" class="text-2xl font-display font-bold">
+                        <span class="gradient-text">Creative</span><span>Portfolio</span>
+                    </a>
+                </div>
+                
+                <div class="text-center md:text-right">
+                    <p class="text-gray-400">&copy; <span id="current-year">2023</span> All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Project Modal -->
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-75" id="modal-overlay"></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto mx-4 transition-all transform scale-95 opacity-0" id="modal-content">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <div class="p-6" id="modal-body">
+                <!-- Content will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div id="add-project-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-75" id="add-modal-overlay"></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-4 transition-all transform scale-95 opacity-0" id="add-modal-content">
+            <div class="p-6">
+                <h3 class="text-2xl font-display font-bold mb-6">Add New Project</h3>
+                
+                <form id="add-project-form" class="space-y-4">
+                    <div>
+                        <label for="project-title" class="block mb-2 font-medium">Project Title</label>
+                        <input type="text" id="project-title" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                    </div>
+                    
+                    <div>
+                        <label for="project-category" class="block mb-2 font-medium">Category</label>
+                        <select id="project-category" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                            <option value="logo">Logo</option>
+                            <option value="branding">Branding</option>
+                            <option value="motion">Motion Graphics</option>
+                            <option value="video">Video</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="project-type" class="block mb-2 font-medium">Project Type</label>
+                        <select id="project-type" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                            <option value="image">Image</option>
+                            <option value="video">Video</option>
+                        </select>
+                    </div>
+                    
+                    <div id="image-input-group">
+                        <label class="block mb-2 font-medium">Project Image</label>
+                        <div class="flex items-center space-x-2">
+                            <button type="button" id="select-image-btn" class="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                                Select Color
+                            </button>
+                            <span id="selected-image-name" class="text-gray-600 dark:text-gray-300">No color selected</span>
+                        </div>
+                        <input type="hidden" id="project-image" value="">
+                    </div>
+                    
+                    <div id="video-input-group" class="hidden">
+                        <label for="project-video" class="block mb-2 font-medium">Video Embed URL (YouTube/Vimeo)</label>
+                        <input type="text" id="project-video" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" placeholder="https://www.youtube.com/embed/...">
+                    </div>
+                    
+                    <div>
+                        <label for="project-description" class="block mb-2 font-medium">Description</label>
+                        <textarea id="project-description" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" id="cancel-add-project" class="px-6 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-2 rounded-lg gradient-bg text-white hover:opacity-90 transition-opacity">
+                            Add Project
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-75" id="login-modal-overlay"></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-lg w-full max-w-md mx-4 transition-all transform scale-95 opacity-0" id="login-modal-content">
+            <div class="p-6">
+                <h3 class="text-2xl font-display font-bold mb-6">Admin Login</h3>
+                
+                <form id="admin-login-form" class="space-y-4">
+                    <div>
+                        <label for="admin-username" class="block mb-2 font-medium">Username</label>
+                        <input type="text" id="admin-username" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                    </div>
+                    
+                    <div>
+                        <label for="admin-password" class="block mb-2 font-medium">Password</label>
+                        <input type="password" id="admin-password" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" id="cancel-login" class="px-6 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-2 rounded-lg gradient-bg text-white hover:opacity-90 transition-opacity">
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-75" id="profile-modal-overlay"></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-4 transition-all transform scale-95 opacity-0" id="profile-modal-content">
+            <div class="p-6">
+                <h3 class="text-2xl font-display font-bold mb-6">Edit Profile</h3>
+                
+                <form id="edit-profile-form" class="space-y-4">
+                    <div>
+                        <label for="edit-name" class="block mb-2 font-medium">Name</label>
+                        <input type="text" id="edit-name" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                    </div>
+                    
+                    <div>
+                        <label for="edit-title" class="block mb-2 font-medium">Professional Title</label>
+                        <input type="text" id="edit-title" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                    </div>
+                    
+                    <div>
+                        <label for="edit-bio" class="block mb-2 font-medium">Bio</label>
+                        <textarea id="edit-bio" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="edit-email" class="block mb-2 font-medium">Email</label>
+                        <input type="email" id="edit-email" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                    </div>
+                    
+                    <div>
+                        <label for="edit-phone" class="block mb-2 font-medium">Phone</label>
+                        <input type="text" id="edit-phone" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                    </div>
+                    
+                    <div>
+                        <label for="edit-location" class="block mb-2 font-medium">Location</label>
+                        <input type="text" id="edit-location" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" required>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" id="cancel-edit-profile" class="px-6 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-2 rounded-lg gradient-bg text-white hover:opacity-90 transition-opacity">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 px-6 py-3 rounded-lg bg-green-500 text-white transform translate-y-20 opacity-0 transition-all duration-300 z-50 hidden">
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <script>
+        // Sample portfolio data
+        let portfolioData = [
+            {
+                id: 1,
+                title: "Modern Brand Identity",
+                category: "branding",
+                type: "image",
+                image: "#3B82F6",
+                description: "A comprehensive brand identity design for a tech startup, including logo, color palette, typography, and brand guidelines.",
+                client: "TechVision Inc.",
+                date: "June 2023"
+            },
+            {
+                id: 2,
+                title: "Minimalist Logo Collection",
+                category: "logo",
+                type: "image",
+                image: "#10B981",
+                description: "A series of minimalist logo designs for various clients, focusing on clean lines and modern aesthetics.",
+                client: "Various",
+                date: "April 2023"
+            },
+            {
+                id: 3,
+                title: "Product Promo Video",
+                category: "video",
+                type: "video",
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                description: "A 30-second promotional video for a new product launch, featuring motion graphics and compelling storytelling.",
+                client: "Consumer Goods Co.",
+                date: "May 2023"
+            },
+            {
+                id: 4,
+                title: "Motion Graphics Intro",
+                category: "motion",
+                type: "video",
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                description: "A dynamic motion graphics intro for a YouTube channel, incorporating brand elements and engaging animations.",
+                client: "Digital Creator",
+                date: "July 2023"
+            },
+            {
+                id: 5,
+                title: "Corporate Identity Package",
+                category: "branding",
+                type: "image",
+                image: "#8B5CF6",
+                description: "Complete corporate identity design including logo, business cards, letterhead, and digital assets.",
+                client: "Finance Solutions Ltd.",
+                date: "March 2023"
+            },
+            {
+                id: 6,
+                title: "App Icon Design",
+                category: "logo",
+                type: "image",
+                image: "#EC4899",
+                description: "Modern and distinctive app icon design for a mobile application, focusing on recognition and brand consistency.",
+                client: "Mobile App Startup",
+                date: "August 2023"
+            }
+        ];
+
+        // User profile data
+        let profileData = {
+            name: "Jamie Parker",
+            title: "Graphic Designer & Video Editor",
+            bio: "I'm a passionate graphic designer and video editor with over 5 years of experience creating compelling visual content. My approach combines technical expertise with creative vision to deliver projects that not only meet but exceed client expectations. I believe in the power of visual storytelling to connect, engage, and inspire audiences.",
+            email: "hello@creativeportfolio.com",
+            phone: "+1 (555) 123-4567",
+            location: "San Francisco, CA"
+        };
+
+        // Admin credentials (mock)
+        const adminCredentials = {
+            username: "admin",
+            password: "password123"
+        };
+
+        // State variables
+        let isAdmin = false;
+        let isDarkMode = false;
+        let nextProjectId = 7;
+
+        // DOM Elements
+        const themeToggle = document.getElementById('theme-toggle');
+        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const adminToggle = document.getElementById('admin-toggle');
+        const mobileAdminToggle = document.getElementById('mobile-admin-toggle');
+        const adminControls = document.getElementById('admin-controls');
+        const portfolioGrid = document.getElementById('portfolio-grid');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectModal = document.getElementById('project-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const closeModal = document.getElementById('close-modal');
+        const modalBody = document.getElementById('modal-body');
+        const addProjectBtn = document.getElementById('add-project-btn');
+        const addProjectModal = document.getElementById('add-project-modal');
+        const addModalContent = document.getElementById('add-modal-content');
+        const addModalOverlay = document.getElementById('add-modal-overlay');
+        const addProjectForm = document.getElementById('add-project-form');
+        const cancelAddProject = document.getElementById('cancel-add-project');
+        const projectTypeSelect = document.getElementById('project-type');
+        const imageInputGroup = document.getElementById('image-input-group');
+        const videoInputGroup = document.getElementById('video-input-group');
+        const selectImageBtn = document.getElementById('select-image-btn');
+        const selectedImageName = document.getElementById('selected-image-name');
+        const projectImage = document.getElementById('project-image');
+        const adminLoginModal = document.getElementById('admin-login-modal');
+        const loginModalContent = document.getElementById('login-modal-content');
+        const loginModalOverlay = document.getElementById('login-modal-overlay');
+        const adminLoginForm = document.getElementById('admin-login-form');
+        const cancelLogin = document.getElementById('cancel-login');
+        const editProfileModal = document.getElementById('edit-profile-modal');
+        const profileModalContent = document.getElementById('profile-modal-content');
+        const profileModalOverlay = document.getElementById('profile-modal-overlay');
+        const editProfileForm = document.getElementById('edit-profile-form');
+        const cancelEditProfile = document.getElementById('cancel-edit-profile');
+        const contactForm = document.getElementById('contact-form');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const currentYear = document.getElementById('current-year');
+
+        // Initialize the app
+        function init() {
+            // Set current year in footer
+            currentYear.textContent = new Date().getFullYear();
+            
+            // Check for saved theme preference
+            if (localStorage.getItem('darkMode') === 'true') {
+                enableDarkMode();
+            }
+            
+            // Check for saved admin status
+            if (localStorage.getItem('isAdmin') === 'true') {
+                isAdmin = true;
+                showAdminUI();
+            }
+            
+            // Load portfolio data
+            const savedPortfolio = localStorage.getItem('portfolioData');
+            if (savedPortfolio) {
+                portfolioData = JSON.parse(savedPortfolio);
+                nextProjectId = Math.max(...portfolioData.map(item => item.id)) + 1;
+            }
+            
+            // Load profile data
+            const savedProfile = localStorage.getItem('profileData');
+            if (savedProfile) {
+                profileData = JSON.parse(savedProfile);
+                updateProfileUI();
+            }
+            
+            // Render portfolio items
+            renderPortfolio();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Theme toggle
+            themeToggle.addEventListener('click', toggleDarkMode);
+            mobileThemeToggle.addEventListener('click', toggleDarkMode);
+            
+            // Mobile menu
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            
+            // Admin toggle
+            adminToggle.addEventListener('click', toggleAdminLogin);
+            mobileAdminToggle.addEventListener('click', toggleAdminLogin);
+            
+            // Portfolio filter
+            filterButtons.forEach(button => {
+                button.addEventListener('click', filterPortfolio);
+            });
+            
+            // Project modal
+            closeModal.addEventListener('click', closeProjectModal);
+            modalOverlay.addEventListener('click', closeProjectModal);
+            
+            // Add project modal
+            addProjectBtn.addEventListener('click', openAddProjectModal);
+            cancelAddProject.addEventListener('click', closeAddProjectModal);
+            addModalOverlay.addEventListener('click', closeAddProjectModal);
+            addProjectForm.addEventListener('submit', handleAddProject);
+            
+            // Project type change
+            projectTypeSelect.addEventListener('change', toggleProjectInputs);
+            
+            // Select image button
+            selectImageBtn.addEventListener('click', selectRandomColor);
+            
+            // Admin login
+            adminLoginForm.addEventListener('submit', handleAdminLogin);
+            cancelLogin.addEventListener('click', closeAdminLoginModal);
+            loginModalOverlay.addEventListener('click', closeAdminLoginModal);
+            
+            // Edit profile
+            editProfileForm.addEventListener('submit', handleEditProfile);
+            cancelEditProfile.addEventListener('click', closeEditProfileModal);
+            profileModalOverlay.addEventListener('click', closeEditProfileModal);
+            
+            // Contact form
+            contactForm.addEventListener('submit', handleContactForm);
+            
+            // Navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        toggleMobileMenu();
+                    }
+                    
+                    // Scroll to section
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active-nav');
+                    });
+                    this.classList.add('active-nav');
+                });
+            });
+            
+            // Scroll event for active nav
+            window.addEventListener('scroll', updateActiveNavOnScroll);
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        }
+
+        // Enable dark mode
+        function enableDarkMode() {
+            document.documentElement.classList.add('dark');
+            isDarkMode = true;
+            localStorage.setItem('darkMode', 'true');
+        }
+
+        // Disable dark mode
+        function disableDarkMode() {
+            document.documentElement.classList.remove('dark');
+            isDarkMode = false;
+            localStorage.setItem('darkMode', 'false');
+        }
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Toggle admin login modal
+        function toggleAdminLogin() {
+            if (isAdmin) {
+                // If already logged in, show admin menu
+                showAdminMenu();
+            } else {
+                // Otherwise show login modal
+                openAdminLoginModal();
+            }
+        }
+
+        // Show admin menu (dropdown)
+        function showAdminMenu() {
+            // For simplicity, we'll just show the edit profile modal
+            openEditProfileModal();
+        }
+
+        // Show admin UI elements
+        function showAdminUI() {
+            adminControls.classList.remove('hidden');
+            adminToggle.innerHTML = '<i class="fas fa-user-shield mr-1"></i> Admin';
+            mobileAdminToggle.innerHTML = '<i class="fas fa-user-shield mr-1"></i> Admin';
+        }
+
+        // Hide admin UI elements
+        function hideAdminUI() {
+            adminControls.classList.add('hidden');
+            adminToggle.innerHTML = '<i class="fas fa-lock mr-1"></i> Admin';
+            mobileAdminToggle.innerHTML = '<i class="fas fa-lock mr-1"></i> Admin';
+        }
+
+        // Render portfolio items
+        function renderPortfolio(filter = 'all') {
+            // Clear existing items
+            portfolioGrid.innerHTML = '';
+            
+            // Filter items
+            const filteredItems = filter === 'all' 
+                ? portfolioData 
+                : portfolioData.filter(item => item.category === filter);
+            
+            // Render items
+            filteredItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'project-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md transition-all';
+                card.setAttribute('data-category', item.category);
+                
+                let thumbnailHtml = '';
+                if (item.type === 'image') {
+                    thumbnailHtml = `
+                        <div class="h-48 flex items-center justify-center" style="background-color: ${item.image}">
+                            <span class="text-white text-4xl">${item.title.charAt(0)}</span>
+                        </div>
+                    `;
+                } else {
+                    thumbnailHtml = `
+                        <div class="h-48 bg-gray-800 flex items-center justify-center">
+                            <i class="fas fa-play-circle text-white text-4xl"></i>
+                        </div>
+                    `;
+                }
+                
+                card.innerHTML = `
+                    ${thumbnailHtml}
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-display font-semibold">${item.title}</h3>
+                            ${isAdmin ? `<button class="delete-project text-red-500 hover:text-red-700 transition-colors" data-id="${item.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>` : ''}
+                        </div>
+                        <span class="inline-block px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-700 mb-3">${item.category.charAt(0).toUpperCase() + item.category.slice(1)}</span>
+                        <p class="text-gray-600 dark:text-gray-300 line-clamp-2">${item.description}</p>
+                        <button class="view-project mt-4 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" data-id="${item.id}">
+                            View Details
+                        </button>
+                    </div>
+                `;
+                
+                portfolioGrid.appendChild(card);
+                
+                // Add event listeners
+                card.querySelector('.view-project').addEventListener('click', () => openProjectModal(item));
+                
+                if (isAdmin) {
+                    card.querySelector('.delete-project').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deleteProject(item.id);
+                    });
+                }
+            });
+        }
+
+        // Filter portfolio items
+        function filterPortfolio() {
+            // Update active button
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active', 'gradient-bg', 'text-white');
+            });
+            this.classList.add('active', 'gradient-bg', 'text-white');
+            
+            // Get filter value
+            const filter = this.getAttribute('data-filter');
+            
+            // Render filtered items
+            renderPortfolio(filter);
+        }
+
+        // Open project modal
+        function openProjectModal(project) {
+            // Populate modal content
+            let contentHtml = '';
+            
+            if (project.type === 'image') {
+                contentHtml = `
+                    <div class="h-64 md:h-80 flex items-center justify-center mb-6" style="background-color: ${project.image}">
+                        <span class="text-white text-6xl">${project.title.charAt(0)}</span>
+                    </div>
+                `;
+            } else {
+                contentHtml = `
+                    <div class="aspect-w-16 aspect-h-9 mb-6">
+                        <iframe class="w-full h-64 md:h-80" src="${project.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                `;
+            }
+            
+            contentHtml += `
+                <h2 class="text-2xl md:text-3xl font-display font-bold mb-4">${project.title}</h2>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="inline-block px-3 py-1 text-sm rounded-full gradient-bg text-white">
+                        ${project.category.charAt(0).toUpperCase() + project.category.slice(1)}
+                    </span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <h4 class="font-semibold mb-1">Client</h4>
+                        <p class="text-gray-600 dark:text-gray-300">${project.client}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-1">Date</h4>
+                        <p class="text-gray-600 dark:text-gray-300">${project.date}</p>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <h4 class="font-semibold mb-2">Project Description</h4>
+                    <p class="text-gray-600 dark:text-gray-300">${project.description}</p>
+                </div>
+            `;
+            
+            modalBody.innerHTML = contentHtml;
+            
+            // Show modal
+            projectModal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Close project modal
+        function closeProjectModal() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                projectModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Open add project modal
+        function openAddProjectModal() {
+            // Reset form
+            addProjectForm.reset();
+            selectedImageName.textContent = 'No color selected';
+            projectImage.value = '';
+            
+            // Show modal
+            addProjectModal.classList.remove('hidden');
+            setTimeout(() => {
+                addModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Close add project modal
+        function closeAddProjectModal() {
+            addModalContent.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                addProjectModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Toggle project input fields based on type
+        function toggleProjectInputs() {
+            if (projectTypeSelect.value === 'image') {
+                imageInputGroup.classList.remove('hidden');
+                videoInputGroup.classList.add('hidden');
+            } else {
+                imageInputGroup.classList.add('hidden');
+                videoInputGroup.classList.remove('hidden');
+            }
+        }
+
+        // Select random color for project image
+        function selectRandomColor() {
+            const colors = ['#3B82F6', '#10B981', '#8B5CF6', '#EC4899', '#F59E0B', '#EF4444', '#06B6D4'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            projectImage.value = randomColor;
+            selectedImageName.textContent = randomColor;
+            selectedImageName.style.color = randomColor;
+        }
+
+        // Handle add project form submission
+        function handleAddProject(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('project-title').value;
+            const category = document.getElementById('project-category').value;
+            const type = document.getElementById('project-type').value;
+            const description = document.getElementById('project-description').value;
+            
+            // Create new project object
+            const newProject = {
+                id: nextProjectId++,
+                title,
+                category,
+                type,
+                description,
+                client: 'Client Name',
+                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
+            };
+            
+            // Add image or video URL
+            if (type === 'image') {
+                newProject.image = projectImage.value || '#3B82F6';
+            } else {
+                newProject.video = document.getElementById('project-video').value || 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+            }
+            
+            // Add to portfolio data
+            portfolioData.unshift(newProject);
+            
+            // Save to localStorage
+            localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+            
+            // Re-render portfolio
+            renderPortfolio();
+            
+            // Close modal
+            closeAddProjectModal();
+            
+            // Show success toast
+            showToast('Project added successfully!');
+        }
+
+        // Delete project
+        function deleteProject(id) {
+            // Filter out the project
+            portfolioData = portfolioData.filter(item => item.id !== id);
+            
+            // Save to localStorage
+            localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+            
+            // Re-render portfolio
+            renderPortfolio();
+            
+            // Show success toast
+            showToast('Project deleted successfully!');
+        }
+
+        // Open admin login modal
+        function openAdminLoginModal() {
+            // Reset form
+            adminLoginForm.reset();
+            
+            // Show modal
+            adminLoginModal.classList.remove('hidden');
+            setTimeout(() => {
+                loginModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Close admin login modal
+        function closeAdminLoginModal() {
+            loginModalContent.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                adminLoginModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Handle admin login form submission
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            
+            // Check credentials
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                // Set admin status
+                isAdmin = true;
+                localStorage.setItem('isAdmin', 'true');
+                
+                // Show admin UI
+                showAdminUI();
+                
+                // Close modal
+                closeAdminLoginModal();
+                
+                // Show success toast
+                showToast('Logged in as admin!');
+                
+                // Re-render portfolio to show delete buttons
+                renderPortfolio();
+            } else {
+                // Show error toast
+                showToast('Invalid credentials!', 'error');
+            }
+        }
+
+        // Open edit profile modal
+        function openEditProfileModal() {
+            // Populate form
+            document.getElementById('edit-name').value = profileData.name;
+            document.getElementById('edit-title').value = profileData.title;
+            document.getElementById('edit-bio').value = profileData.bio;
+            document.getElementById('edit-email').value = profileData.email;
+            document.getElementById('edit-phone').value = profileData.phone;
+            document.getElementById('edit-location').value = profileData.location;
+            
+            // Show modal
+            editProfileModal.classList.remove('hidden');
+            setTimeout(() => {
+                profileModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Close edit profile modal
+        function closeEditProfileModal() {
+            profileModalContent.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                editProfileModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Handle edit profile form submission
+        function handleEditProfile(e) {
+            e.preventDefault();
+            
+            // Get form values
+            profileData = {
+                name: document.getElementById('edit-name').value,
+                title: document.getElementById('edit-title').value,
+                bio: document.getElementById('edit-bio').value,
+                email: document.getElementById('edit-email').value,
+                phone: document.getElementById('edit-phone').value,
+                location: document.getElementById('edit-location').value
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+            
+            // Update UI
+            updateProfileUI();
+            
+            // Close modal
+            closeEditProfileModal();
+            
+            // Show success toast
+            showToast('Profile updated successfully!');
+        }
+
+        // Update profile UI
+        function updateProfileUI() {
+            document.getElementById('profile-name').textContent = profileData.name;
+            document.getElementById('profile-title').textContent = profileData.title;
+            document.getElementById('profile-bio').textContent = profileData.bio;
+            document.getElementById('contact-email').textContent = profileData.email;
+            document.getElementById('contact-phone').textContent = profileData.phone;
+            document.getElementById('contact-location').textContent = profileData.location;
+        }
+
+        // Handle contact form submission
+        function handleContactForm(e) {
+            e.preventDefault();
+            
+            // In a real app, this would send the form data to a server
+            // For demo purposes, we'll just show a success message
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Show success toast
+            showToast('Message sent successfully!');
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            // Set message
+            toastMessage.textContent = message;
+            
+            // Set color based on type
+            if (type === 'success') {
+                toast.className = 'fixed bottom-4 right-4 px-6 py-3 rounded-lg bg-green-500 text-white transform translate-y-20 opacity-0 transition-all duration-300 z-50';
+            } else {
+                toast.className = 'fixed bottom-4 right-4 px-6 py-3 rounded-lg bg-red-500 text-white transform translate-y-20 opacity-0 transition-all duration-300 z-50';
+            }
+            
+            // Show toast
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-20', 'opacity-0');
+            }, 10);
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 3000);
+        }
+
+        // Update active nav link on scroll
+        function updateActiveNavOnScroll() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active-nav');
+                }
+            });
+        }
+
+        // Initialize the app
+        init();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'964b6e1cf23e3ca0',t:'MTc1MzQ0NDEyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
